@@ -6,6 +6,11 @@ Job seekers upload their PDF resume to instantly receive an ATS compliance score
 
 ---
 
+## 📌 Demo Link
+🔗 https://careerboost-ai-jayjadhav.vercel.app/
+
+---
+
 ## 🏗️ System Architecture
 
 This application is built as a single-session web app, keeping all candidate data secure and private by processing resume contents strictly in-memory without a database.
