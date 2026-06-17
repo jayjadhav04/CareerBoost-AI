@@ -57,7 +57,7 @@ graph TD
 
 
 ### 1. Landing Page & Upload Dropzone
-![Landing & Upload Zone](CareerBoost-AI/src/public/screenshots/landing_upload.png)
+![Landing & Upload Zone](src/public/screenshots/landing_upload.png)
 > This landing screen invites job seekers to upload their resume using a drag-and-drop file uploader. 
 > The UI features an animated radial grid backdrop and a sleek light/dark mode header selector.
 
@@ -67,12 +67,12 @@ graph TD
 > Features detailed cards for professional summaries, key strengths, formatting weaknesses, missing skills, and suggestions.
 
 ### 3. Interview Preparation Q&As
-![Interview Questions & Answers](/public/screenshots/interview_prep.png)
+![Interview Questions & Answers](src/public/screenshots/interview_prep.png)
 > Renders Technical, HR, and Project interview questions in a clean tabbed panel. 
 > Each card can be clicked to slide open a "Reference Answer Guide" displaying custom, resume-specific guidance.
 
 ### 4. Adaptive Dark Mode View
-![Dark Mode Dashboard](/public/screenshots/dark_mode.png)
+![Dark Mode Dashboard](src/public/screenshots/dark_mode.png)
 > Shows the entire SaaS interface adapted to a premium dark theme using HSL slate variables. 
 > Provides high-contrast readability and glowing ambient blur blobs for a premium user experience.
 
