@@ -57,12 +57,12 @@ graph TD
 
 
 ### 1. Landing Page & Upload Dropzone
-![Landing & Upload Zone](/public/screenshots/landing_upload.png)
+![Landing & Upload Zone](CareerBoost-AI/src/public/screenshots/landing_upload.png)
 > This landing screen invites job seekers to upload their resume using a drag-and-drop file uploader. 
 > The UI features an animated radial grid backdrop and a sleek light/dark mode header selector.
 
 ### 2. ATS Analysis Dashboard
-![ATS Scoring & Insights](/public/screenshots/ats_dashboard.png)
+![ATS Scoring & Insights](src/public/screenshots/ats_dashboard.png)
 > Displays the calculated ATS score inside a custom-styled circular progress gauge with rating indicators. 
 > Features detailed cards for professional summaries, key strengths, formatting weaknesses, missing skills, and suggestions.
 
