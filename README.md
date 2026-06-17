@@ -1,65 +1,124 @@
 # CareerBoost AI 🚀
 
-CareerBoost AI is a complete, production-ready, AI-powered Resume Analyzer and Interview Preparation Coach designed to help job seekers pass ATS filters and prepare for technical, HR, and project-based interviews.
+CareerBoost AI is a complete, production-ready, AI-powered Resume Analyzer and Interview Preparation Coach built using **Next.js App Router**, **TypeScript**, **Tailwind CSS**, and the **Google Gemini AI API**.
 
-Built as a lightweight, single-session web app, it processes resumes entirely in memory without requiring a database, keeping candidate data secure and private.
+Job seekers upload their PDF resume to instantly receive an ATS compliance score, resume formatting suggestions, strengths, weaknesses, and a custom deck of 25 interview questions (Technical, HR, and Project-based) complete with suggested reference answers customized specifically to the experiences listed on their resume.
 
-## ✨ Features
+---
 
-- 📂 **PDF Resume Parsing**: Upload your PDF resume to extract clean text server-side.
-- 📊 **Deterministic ATS Scoring**: Evaluates the resume systematically and calculates an objective ATS score (out of 100) using a strict prompt grading rubric.
-- 💡 **Actionable ATS Insights**: Highlights resume summaries, key strengths, formatting weaknesses, missing critical skills, and specific suggestions for improvement.
-- 🎓 **Personalized Interview prep**: Generates a tailored deck of:
-  - 10 Technical Questions
-  - 10 HR / Behavioral Questions
-  - 5 Project-Based Questions
-- 🔑 **Resume-Specific Guideline Answers**: Each interview question comes with a suggested answer guide showing you how to phrase your answers using your specific work experience and accomplishments.
-- 📋 **Click-to-Copy Reports**: Copy individual sections or the entire analysis/interview Q&As to your clipboard with a single click.
-- 🌓 **Premium UI & Dark Mode**: Beautiful SaaS-style design featuring floating gradient glows, repeating background grids, smooth keyframe animations, and full system-preference dark mode support.
+## 🏗️ System Architecture
 
-## 🛠️ Technology Stack
+This application is built as a single-session web app, keeping all candidate data secure and private by processing resume contents strictly in-memory without a database.
 
-- **Framework**: Next.js App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS (v4)
-- **AI Integration**: Google Gemini 2.5 Flash API
-- **PDF Extraction**: pdf-parse (Node.js buffer parsing)
-- **Icons**: Lucide React / Custom SVGs
+```mermaid
+graph TD
+    %% Frontend Layer
+    subgraph Client [Browser - Client Side]
+        UI[React Components <br/> /src/components]
+        Theme[Theme Toggle <br/> Light / Dark Mode]
+    end
 
-## 🚀 Local Setup
+    %% Backend Server Action Layer
+    subgraph Server [Next.js Server Actions - Secure Node.js]
+        Actions[actions.ts <br/> 'use server' entrypoint]
+        Parser[pdfExtractor.ts <br/> pdf-parse engine]
+        Gemini[gemini.ts <br/> Gemini API Wrapper]
+    end
 
-Follow these steps to run the application on your computer:
+    %% Google Cloud Models Layer
+    subgraph API [Google Gemini API Layer]
+        Model[Gemini 2.5 Flash <br/> Model Output Mime: JSON]
+    end
 
-1. **Clone or Navigate to the Directory**:
+    %% Flow Connections
+    UI -->|1. Upload PDF Resume| Actions
+    Actions -->|2. Buffer Processing| Parser
+    Parser -->|3. Extracted Plain Text| Actions
+    Actions -->|4. Prompt Query| Gemini
+    Gemini -->|5. Encrypted Request| Model
+    Model -->|6. Structured JSON| Gemini
+    Gemini -->|7. Validated ATS Object| Actions
+    Actions -->|8. State Update| UI
+    Theme -->|9. Toggle .dark class| UI
+```
+
+---
+
+## 🔄 Core Application Workflow
+
+1. **Upload & Parser (In-Memory)**: The candidate uploads a resume PDF. The React upload component converts the file into a Node buffer and executes text extraction using `pdf-parse` strictly on the server.
+2. **ATS Scoring Rubric**: The plain text is fed to `gemini-2.5-flash` with a temperature setting of `0` to guarantee deterministic and stable scores. The prompt calculates a score out of 100 based on standard formatting and key credentials.
+3. **Reference Q&As**: Generates 10 Technical, 10 Behavioral, and 5 Project questions, including a 1-to-2 sentence answer guide showing the user how to talk about their achievements.
+4. **Interactive Accordion UI**: Renders results in a responsive tabbed view where candidate questions feature toggleable accordion panels to reveal reference answer guides.
+
+---
+
+## 📷 Screenshots & Visual Demo
+
+*Note: Add your screenshots in the `public/screenshots/` directory and update the image pathways below.*
+
+### 1. Landing Page & Upload Dropzone
+![Landing & Upload Zone](/public/screenshots/landing_upload.png)
+> This landing screen invites job seekers to upload their resume using a drag-and-drop file uploader. 
+> The UI features an animated radial grid backdrop and a sleek light/dark mode header selector.
+
+### 2. ATS Analysis Dashboard
+![ATS Scoring & Insights](/public/screenshots/ats_dashboard.png)
+> Displays the calculated ATS score inside a custom-styled circular progress gauge with rating indicators. 
+> Features detailed cards for professional summaries, key strengths, formatting weaknesses, missing skills, and suggestions.
+
+### 3. Interview Preparation Q&As
+![Interview Questions & Answers](/public/screenshots/interview_prep.png)
+> Renders Technical, HR, and Project interview questions in a clean tabbed panel. 
+> Each card can be clicked to slide open a "Reference Answer Guide" displaying custom, resume-specific guidance.
+
+### 4. Adaptive Dark Mode View
+![Dark Mode Dashboard](/public/screenshots/dark_mode.png)
+> Shows the entire SaaS interface adapted to a premium dark theme using HSL slate variables. 
+> Provides high-contrast readability and glowing ambient blur blobs for a premium user experience.
+
+---
+
+## 🚀 Local Development Setup
+
+To run CareerBoost AI locally on your machine, follow these steps:
+
+1. **Clone the Directory & Install**:
    ```bash
    cd careerboost-ai
-   ```
-
-2. **Install Dependencies**:
-   ```bash
    npm install
    ```
 
-3. **Configure Environment Variables**:
-   Copy the environment variables template file:
+2. **Configure Environment variables**:
    ```bash
    cp .env.local.example .env.local
    ```
-   Open the `.env.local` file and replace `your_gemini_api_key_here` with your Gemini API key from [Google AI Studio](https://aistudio.google.com/).
+   Open `.env.local` and replace `your_gemini_api_key_here` with your API key from [Google AI Studio](https://aistudio.google.com/).
 
-4. **Run the Development Server**:
+3. **Start Local Server**:
    ```bash
    npm run dev
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📦 Vercel Deployment
+---
 
-Deploying the app to Vercel takes less than 2 minutes:
+## 📦 Deploying to Vercel
 
 1. Push your repository to **GitHub**.
-2. Go to **Vercel** and import your repository.
-3. Under **Environment Variables**, add:
-   - Key: `GEMINI_API_KEY`
-   - Value: `YOUR_ACTUAL_GEMINI_API_KEY`
-4. Click **Deploy**. Vercel will build and host your Next.js app on their free tier.
+2. Connect your GitHub account to **Vercel** and import this project.
+3. Add the following **Environment Variable** in the Vercel project configuration page:
+   - **Key**: `GEMINI_API_KEY`
+   - **Value**: `YOUR_AI_STUDIO_API_KEY_HERE`
+4. Click **Deploy**. Vercel will host your site on its secure, global serverless framework.
+
+---
+
+## 👨‍💻 Developer Profile
+
+**Jay Jadhav**
+- **Email**: [jaydjadhav1111@gmail.com](mailto:jaydjadhav1111@gmail.com)
+
+- **LinkedIn**: [in/jayjadhav04](https://linkedin.com/in/jayjadhav04)
+- **GitHub**: [github.com/jayjadhav04](https://github.com/jayjadhav04)
+- **Portfolio**: [jay-jadhav-portfolio.vercel.app](https://jay-jadhav-portfolio.vercel.app)
