@@ -55,7 +55,6 @@ graph TD
 
 ## 📷 Screenshots & Visual Demo
 
-*Note: Add your screenshots in the `public/screenshots/` directory and update the image pathways below.*
 
 ### 1. Landing Page & Upload Dropzone
 ![Landing & Upload Zone](/public/screenshots/landing_upload.png)
